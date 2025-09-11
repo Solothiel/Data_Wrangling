@@ -22,3 +22,10 @@ def create_database():
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
     return cur, conn
+
+def drop_tables (cur, conn):
+    """ Drops each table using the queries in 'drop_tables_queries' list.
+    """
+    for query in drop_table_queries:
+        cur.execute(query)
+        conn.commit()
