@@ -1,0 +1,60 @@
+# Project #
+
+Sparkify is wanting to measure usage on there music streaming app, however the information is not easy to access. The data is stored in 2 seperate json file.  The first is the Raw data of teh song which is in the Data folder, and the other is the log file.
+
+So our goal is using sql and python, to create an easier way to extract, transform and load  (ETL) the data, so that the data can be analyzed for streaming habits of the end user.
+
+This will be a great benefit down the road, as good data can help made better business decisions.
+
+The information to make the data set run are saved in the data folder and log folder.
+
+## how to run ##
+> The files need to be run in a specific order.
+
+   **•	Step one: **make sure the kernel has been stopped, as failing to stop the kernel can cause issues with the process.
+   **•	Step two: ** Run ==create_tables.py==.   This will drop any existing tables, and start from scratch.
+   **•	Step three: **Run the ==etl.py==. This will start the process of gathering the data from the data files and populating the database. This works by the ==etl.py== calling ==sql_queries.py== for the fact table and dimension tables, then gathering the data from the data file and log files and inserting it in the those specific tables.
+   **•	Testing** can be performed after these are run, by executing the ***test.ipynb***
+
+This is project is taking 2 databases. The first is a subset of the Million Song Dataset. These files are in JSON format. Inside the dataset are files that contain a single song file.
+
+### Example dataset file ###
+        song_data/A/B/C/TRABCEI128F424C983.json
+        song_data/A/A/B/TRAABJL12903CDCF1A.json
+
+### Example song file ###
+       {"num_songs": 1, "artist_id": "ARJIE2Y1187B994AB7", "artist_latitude": null, "artist_longitude": null,      "artist_location": "", "artist_name": "Line Renaud", "song_id": "SOUPIRU12A6D4FA1E1", "title": "Der Kleine     Dompfaff", "duration": 152.92036, "year": 0}
+
+The second dataset is log files in JSON format.  These are generated from an event simulator based on the songs in the dataset.
+
+### Example Log Dataset file ###
+
+        log_data/2018/11/2018-11-12-events.json
+        log_data/2018/11/2018-11-13-events.json
+
+
+### Example date contained in the event log file ###
+
+| artist | firstName | lastName | gender | status | userId |
+|--------|-----------|----------|--------|--------|--------|
+| spor   | Tegan     | Levin    | F      | 200    | 80     |
+
+
+The project is making a fact table and 4 dimension tables.  Below is the project instructions on what should be contained.
+
+>**NOTE**– the actual data in the folders has different labels, then the project instructions, and example is                user_id is how it is listed in the project instructions but the actual data shows userId.
+
+## Fact Table##
+
+**songplays** - records in log data associated with song plays records with page NextSong
+    * *•	songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent* *
+
+### Dimension Tables###
+**users** - users in the app
+    * *•	user_id, first_name, last_name, gender, level* *
+**songs** - songs in music database
+    * *•	song_id, title, artist_id, year, duration* *
+**artists** - artists in music database
+    * *•	artist_id, name, location, latitude, longitude* *
+**time** - timestamps of records in songplays broken down into specific units
+    * *•	start_time, hour, day, week, month, year, weekday* *
